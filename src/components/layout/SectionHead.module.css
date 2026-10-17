@@ -1,0 +1,84 @@
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 28px clamp(32px, 6vw, 96px);
+  margin-block-end: clamp(48px, 7vw, 88px);
+}
+
+.noIntro {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-block-end: 26px;
+  color: var(--gold);
+}
+
+.index {
+  font-family: var(--f-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+:root[lang='ar'] .index {
+  font-family: var(--f-sans);
+  font-size: 0.95rem;
+}
+
+.rule {
+  width: 56px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.title {
+  font-size: var(--fs-h2);
+  color: var(--cream);
+  max-width: 14em;
+}
+
+.intro {
+  max-width: 42ch;
+  padding-block-end: 0.6em;
+  font-size: clamp(1.02rem, 0.96rem + 0.22vw, 1.14rem);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+:root[lang='ar'] .intro {
+  font-family: var(--f-read);
+  line-height: 1.85;
+}
+
+/* On cream paper */
+.light .kicker {
+  color: var(--emerald);
+}
+
+.light .title {
+  color: var(--paper-ink);
+}
+
+/* The accent stays emerald on paper, and so does its sweep of light (gold would vanish on cream). */
+.light .title :global(.accent) {
+  --sheen-ink: var(--emerald);
+  --sheen-light: color-mix(in srgb, var(--emerald) 55%, var(--gold));
+  --sheen-peak: var(--emerald-deep);
+  color: var(--emerald);
+}
+
+.light .intro {
+  color: var(--paper-ink-soft);
+}
+
+@media (max-width: 900px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

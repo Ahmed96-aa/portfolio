@@ -1,0 +1,248 @@
+.footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(96px, 12vw, 160px) 28px;
+  border-top: 1px solid var(--line);
+  background:
+    radial-gradient(80% 60% at 50% 110%, rgba(12, 74, 62, 0.95), transparent 70%),
+    var(--emerald-deep);
+}
+
+/* The canvas covers only the band the sphere rises into, so no pixels are spent on empty sky. */
+.sun {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: min(100%, 760px);
+}
+
+@media (max-width: 760px) {
+  .sun {
+    left: -45%;
+    width: 190%;
+    height: 440px;
+  }
+}
+
+/* ───────── Closing call to action ───────── */
+
+.cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 32px clamp(32px, 6vw, 96px);
+  padding-block-end: clamp(64px, 8vw, 112px);
+  border-bottom: 1px solid var(--line);
+}
+
+.ctaTitle {
+  font-size: clamp(2.8rem, 1.5rem + 4.2vw, 5.9rem);
+  color: var(--cream);
+}
+
+.ctaSide {
+  display: grid;
+  gap: 22px;
+  padding-block-end: 0.6em;
+}
+
+.ctaBody {
+  max-width: 40ch;
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.mail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--gold);
+  font-family: var(--f-latin-display);
+  font-size: clamp(1.35rem, 1rem + 1.2vw, 2.1rem);
+  line-height: 1.2;
+  color: var(--gold-bright);
+  direction: ltr;
+  word-break: break-all;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.mail:hover {
+  color: var(--cream);
+  border-color: var(--cream);
+}
+
+/* ───────── Columns ───────── */
+
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 0.8fr)) minmax(0, 1fr);
+  gap: 40px 32px;
+  padding-block: 56px;
+}
+
+.logo {
+  font-size: 52px;
+}
+
+.heritage {
+  margin-block-start: 22px;
+  max-width: 32ch;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.colTitle {
+  margin-block-end: 18px;
+  color: var(--gold);
+  font-size: var(--fs-label);
+}
+
+.links {
+  display: grid;
+  gap: 10px;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.95rem;
+  color: var(--cream);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.links a svg {
+  color: var(--gold);
+}
+
+.links a:hover {
+  color: var(--gold-bright);
+}
+
+.cv {
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.metaCol {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 16px;
+}
+
+.quick {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.86rem;
+  color: var(--muted);
+  text-align: start;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.quick kbd {
+  padding: 2px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  font-family: var(--f-mono);
+  font-size: 0.74rem;
+  color: var(--gold-bright);
+}
+
+.quick:hover {
+  color: var(--cream);
+}
+
+/* ───────── Bottom line ───────── */
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 24px;
+  padding-block-start: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.monoNote {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: rgba(169, 191, 177, 0.8);
+}
+
+.top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cream);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.top:hover {
+  color: var(--gold-bright);
+}
+
+.top svg {
+  transition: transform 0.5s var(--ease-out);
+}
+
+.top:hover svg {
+  transform: translateY(-3px);
+}
+
+@media (max-width: 1023px) {
+  .cta {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .brandCol {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Phones: the two link lists stay side by side (two short columns instead of one long one). */
+@media (max-width: 560px) {
+  .footer {
+    padding-block-start: 72px;
+  }
+  .cta {
+    padding-block-end: 52px;
+  }
+  .cols {
+    gap: 36px 20px;
+    padding-block: 44px;
+  }
+  .metaCol {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (hover: none) {
+  .quick {
+    display: none;
+  }
+}

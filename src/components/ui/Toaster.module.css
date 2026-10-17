@@ -1,0 +1,38 @@
+.region {
+  position: fixed;
+  z-index: 260;
+  inset-block-end: 24px;
+  inset-inline: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  padding-inline: 16px;
+}
+
+.toast {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 1px solid var(--mint-line);
+  border-radius: 999px;
+  background: rgba(7, 51, 43, 0.92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-lg);
+  color: var(--cream);
+  font-size: 0.92rem;
+  font-weight: 500;
+  animation: rise 0.5s var(--ease-out);
+}
+
+.toast svg {
+  color: var(--mint);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+}

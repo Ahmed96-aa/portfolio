@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: 'Instrument Serif'; src: url('FONTS/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2') format('woff2'); font-style: normal; }
+  @font-face { font-family: 'Instrument Serif'; src: url('FONTS/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2') format('woff2'); font-style: italic; }
+  @font-face { font-family: 'Geist'; src: url('FONTS/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 100 900; }
+  @font-face { font-family: 'Geist Mono'; src: url('FONTS/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 100 900; }
+  @font-face { font-family: 'AlexandriaAr'; src: url('FONTS/@fontsource-variable/alexandria/files/alexandria-arabic-wght-normal.woff2') format('woff2-variations'); font-weight: 100 900; }
+  @font-face { font-family: 'PlexAr'; src: url('FONTS/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-400-normal.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Ruqaa'; src: url('FONTS/@fontsource/aref-ruqaa/files/aref-ruqaa-arabic-700-normal.woff2') format('woff2'); font-weight: 700; }
+
+  html, body { margin: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; background: #07332b; color: #efe6cc; font-family: Geist, sans-serif; }
+  .og { position: relative; width: 1200px; height: 630px; overflow: hidden;
+    background: radial-gradient(80% 90% at 82% 30%, #0c4a3e 0%, rgba(12,74,62,.5) 45%, transparent 75%), #07332b; }
+  .grid { position: absolute; inset: 0;
+    background-image: linear-gradient(to right, rgba(217,193,141,.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(217,193,141,.06) 1px, transparent 1px);
+    background-size: 60px 60px; -webkit-mask-image: radial-gradient(70% 80% at 78% 40%, #000 20%, transparent 80%); }
+  .frame { position: absolute; inset: 22px; border: 1px solid rgba(217,193,141,.28); border-radius: 26px; }
+  .rosette { position: absolute; width: 820px; height: 820px; right: -180px; top: -100px; color: #d9c18d; opacity: .09; }
+  .copy { position: absolute; left: 76px; top: 70px; width: 640px; }
+  .mono { display: block; height: 60px; width: auto; }
+  .label { margin-top: 34px; font-family: 'Geist Mono'; font-size: 15px; letter-spacing: .18em; text-transform: uppercase; color: #d9c18d; }
+  h1 { margin: 18px 0 0; font-family: 'Instrument Serif'; font-weight: 400; font-size: 76px; line-height: .98; letter-spacing: -.015em; color: #efe6cc; }
+  h1 em { color: #d9c18d; }
+  .sub { margin-top: 26px; font-size: 21px; line-height: 1.5; color: color-mix(in srgb, #efe6cc 84%, #a9bfb1); max-width: 34em; }
+  .tech { position: absolute; left: 76px; bottom: 64px; font-family: 'Geist Mono'; font-size: 15px; letter-spacing: .08em; color: #a9bfb1; }
+  .tech b { color: #5fe0c8; font-weight: 500; }
+  .card { position: absolute; right: 84px; top: 92px; width: 300px; height: 446px; border-radius: 26px; border: 1px solid rgba(217,193,141,.34);
+    background: radial-gradient(130% 70% at 50% 0%, #0c4a3e 0%, #0a3f35 52%, #07332b 100%); box-shadow: 0 40px 90px -30px rgba(3,26,21,.85); overflow: hidden; }
+  .card::before { content: ''; position: absolute; inset: 9px; border: 1px solid rgba(217,193,141,.16); border-radius: 18px; }
+  .slot { position: absolute; top: 15px; left: 50%; width: 54px; height: 10px; margin-left: -27px; border-radius: 10px; background: #07332b; box-shadow: inset 0 1px 2px rgba(3,26,21,.9); }
+  .photoWrap { position: absolute; left: 50%; top: 56px; width: 168px; height: 168px; margin-left: -84px; }
+  .ring { position: absolute; inset: -38px; color: #d9c18d; opacity: .4; }
+  .photo { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; background: radial-gradient(circle at 50% 32%, color-mix(in oklab, #0c4a3e 72%, #84d0bc) 0%, #0c4a3e 50%, #07332b 100%);
+    box-shadow: 0 0 0 1px #d9c18d, 0 0 0 7px rgba(7,51,43,.92), 0 0 0 8px rgba(217,193,141,.34); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 14%; transform: scale(1.06) translateY(3%); }
+  .name { position: absolute; left: 0; right: 0; top: 262px; text-align: center; font-family: 'Instrument Serif'; font-size: 31px; line-height: 1.05; color: #efe6cc; }
+  .nameAr { position: absolute; left: 0; right: 0; top: 300px; text-align: center; font-family: 'AlexandriaAr'; font-weight: 500; font-size: 19px; color: #d9c18d; direction: rtl; }
+  .role { position: absolute; left: 0; right: 0; top: 338px; text-align: center; font-size: 12.5px; color: #a9bfb1; }
+  .mrz { position: absolute; left: 26px; bottom: 26px; font-family: 'Geist Mono'; font-size: 9px; letter-spacing: .15em; line-height: 1.7; color: rgba(239,230,204,.5); white-space: nowrap; }
+  .seal { position: absolute; right: 24px; bottom: 24px; width: 46px; height: 46px; border-radius: 50%;
+    background: conic-gradient(from 40deg, #d9c18d, #5fe0c8, #efe6cc, #ead6a4, #84d0bc, #d9c18d); box-shadow: 0 0 0 1px rgba(217,193,141,.34), inset 0 0 0 5px rgba(239,230,204,.28); }
+
+  /* Arabic variant */
+  .ar .copy { left: auto; right: 76px; direction: rtl; text-align: right; }
+  .ar .card { right: auto; left: 84px; }
+  .ar .rosette { right: auto; left: -180px; }
+  .ar .label { font-family: 'AlexandriaAr'; letter-spacing: 0; font-size: 19px; text-transform: none; }
+  .ar h1 { font-family: Geist, 'AlexandriaAr'; font-weight: 600; font-size: 54px; line-height: 1.38; }
+  .ar h1 em { font-family: 'Ruqaa'; font-style: normal; font-weight: 700; font-size: .94em; }
+  .ar .sub { font-family: Geist, 'PlexAr'; font-size: 22px; line-height: 1.75; }
+  .ar .tech { left: auto; right: 76px; direction: rtl; font-family: 'Geist Mono', 'AlexandriaAr'; letter-spacing: 0; }
+  .ar .role { direction: rtl; font-family: Geist, 'AlexandriaAr'; }
+  .ar .grid { -webkit-mask-image: radial-gradient(70% 80% at 22% 40%, #000 20%, transparent 80%); }
+  .ar .og { background: radial-gradient(80% 90% at 18% 30%, #0c4a3e 0%, rgba(12,74,62,.5) 45%, transparent 75%), #07332b; }
+</style>
+</head>
+<body>
+<div class="og" id="og">
+  <div class="grid"></div>
+  <svg class="rosette" viewBox="-100 -100 200 200" id="r1"></svg>
+  <div class="frame"></div>
+  <div class="copy">
+    <svg class="mono" viewBox="2171.2 -1102.1 699.6 1162.1" aria-hidden="true"><path fill="#EFE6CC" d="M2305.5 -730L2465.8 -730L2810.8 0L2650.5 0ZM2405.8 -285L2535.8 -285L2592.5 -165L2405.8 -165Z"/><path fill="#5FE0C8" d="M2275.8 0L2425.8 0L2425.8 -730L2275.8 -730Z"/><path fill="#D9C18D" d="M2231.2 -850.4 2294.9 -860.4Q2272.5 -872.1 2258.7 -891.9Q2245 -911.7 2245 -937.6Q2245 -987.1 2279.2 -1014.6Q2313.3 -1042.1 2370 -1042.1Q2424.5 -1042.1 2461.3 -1021.9L2439.2 -964.4Q2424.8 -972.3 2409.5 -975.7Q2394.2 -979.2 2377.9 -979.2Q2352.6 -979.2 2337.3 -964.3Q2321.9 -949.5 2321.9 -923.4Q2321.9 -904.8 2331.7 -891.5Q2341.5 -878.2 2356.4 -871.3Q2385.2 -876.8 2406.7 -879.7Q2428.3 -882.6 2443.9 -884.4Q2459.5 -886.2 2470.5 -886.2V-821.3Q2449.6 -820.1 2414.2 -816.3Q2378.8 -812.4 2340.5 -808Q2302.1 -803.6 2272.1 -799.5Q2242.1 -795.4 2231.2 -792.7Z"/></svg>
+    <p class="label" id="label"></p>
+    <h1 id="title"></h1>
+    <p class="sub" id="sub"></p>
+  </div>
+  <p class="tech" id="tech"></p>
+  <div class="card">
+    <span class="slot"></span>
+    <div class="photoWrap">
+      <svg class="ring" viewBox="-100 -100 200 200" id="r2"></svg>
+      <div class="photo"><img src="PORTRAIT" alt=""></div>
+    </div>
+    <p class="name">Ahmed Abbas Ashour</p>
+    <p class="nameAr">أحمد عباس عاشور</p>
+    <p class="role" id="role"></p>
+    <p class="mrz">ID&lt;IRQ&lt;ASHOUR&lt;&lt;AHMED&lt;ABBAS&lt;&lt;&lt;&lt;<br>FULLSTACK&lt;CSHARP&lt;DOTNET&lt;REACT</p>
+    <span class="seal"></span>
+  </div>
+</div>
+<script>
+  const COPY = {
+    en: {
+      label: 'Full-Stack Developer · Technical Lead · Baghdad',
+      title: 'I build the <em>systems</em> organizations run on.',
+      sub: 'Secure, fast web systems — ERP, ticketing, tracking and automation — designed from the database up.',
+      tech: '<b>C#</b> · ASP.NET Core · React · Next.js · SQL Server · PostgreSQL',
+      role: 'Full-Stack Developer · Technical Lead',
+    },
+    ar: {
+      label: 'مطوّر Full-Stack · قائد تقني · بغداد',
+      title: 'أبني <em>الأنظمة</em> التي تقوم عليها المؤسسات.',
+      sub: 'أنظمة ويب آمنة وسريعة — ERP والتذاكر والتتبّع والأتمتة — مصمّمة من قاعدة البيانات صعودًا.',
+      tech: '<b>C#</b> · ASP.NET Core · React · Next.js · SQL Server · PostgreSQL',
+      role: 'مطوّر Full-Stack · قائد تقني',
+    },
+  };
+  const lang = new URLSearchParams(location.search).get('lang') || 'en';
+  if (lang === 'ar') document.body.classList.add('ar');
+  for (const [id, html] of Object.entries(COPY[lang])) document.getElementById(id).innerHTML = html;
+  function band(R, A, p, n, per = 12) {
+    let d = '';
+    const steps = p * per;
+    for (let k = 0; k < n; k++) {
+      const ph = (2 * Math.PI * k) / n;
+      for (let i = 0; i <= steps; i++) {
+        const th = (i / steps) * Math.PI * 2;
+        const r = R + A * Math.sin(p * th + ph);
+        d += (i ? 'L' : 'M') + (r * Math.cos(th)).toFixed(1) + ' ' + (r * Math.sin(th)).toFixed(1);
+      }
+      d += 'Z';
+    }
+    return d;
+  }
+  const g = `<g fill="none" stroke="currentColor" stroke-width="0.35"><circle r="98.5"/><circle r="96" opacity=".6"/>
+    <path d="${band(83, 11, 22, 10)}"/><path d="${band(57, 9, 15, 8)}" opacity=".82"/><path d="${band(33, 7, 9, 6)}" opacity=".66"/>
+    <circle r="20" opacity=".7"/><circle r="17.5" opacity=".45"/></g>`;
+  document.getElementById('r1').innerHTML = g;
+  document.getElementById('r2').innerHTML = g.replace('stroke-width="0.35"', 'stroke-width="0.6"');
+</script>
+</body>
+</html>

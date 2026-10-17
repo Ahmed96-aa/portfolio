@@ -1,0 +1,413 @@
+.header {
+  position: fixed;
+  z-index: 100;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: var(--header-h);
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color var(--dur-mid) var(--ease-out),
+    border-color var(--dur-mid) var(--ease-out),
+    -webkit-backdrop-filter var(--dur-mid) var(--ease-out),
+    backdrop-filter var(--dur-mid) var(--ease-out);
+}
+
+.scrolled {
+  background: rgba(7, 51, 43, 0.76);
+  border-color: var(--line);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+}
+
+/* Reading progress: a gold hairline along the bottom edge of the bar. */
+.progress {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(217, 193, 141, 0.2), var(--gold) 55%, var(--gold-bright) 92%, var(--mint));
+  transform: scaleX(var(--progress, 0));
+  transform-origin: var(--origin-start) center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-mid) var(--ease-out);
+}
+
+:root[dir='rtl'] .progress {
+  background: linear-gradient(270deg, rgba(217, 193, 141, 0.2), var(--gold) 55%, var(--gold-bright) 92%, var(--mint));
+}
+
+.scrolled .progress {
+  opacity: 1;
+}
+
+.bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ───────── Brand ───────── */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+  border-radius: 8px;
+}
+
+.logo {
+  font-size: 30px; /* 124 px wide — the brand's minimum for the full wordmark is ~120 px */
+  transition: opacity 0.3s var(--ease-out);
+}
+
+.brand:hover .logo {
+  opacity: 0.85;
+}
+
+/* Only on the narrowest phones, where the wordmark no longer fits beside the controls. */
+.mono {
+  display: none;
+  font-size: 32px;
+}
+
+.menuLogo {
+  font-size: 30px;
+}
+
+/* ───────── Primary nav ───────── */
+
+.nav {
+  margin-inline: auto;
+}
+
+.nav ul {
+  display: flex;
+  gap: 2px;
+}
+
+.nav a {
+  position: relative;
+  display: block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.nav a:hover {
+  color: var(--cream);
+  background: var(--gold-wash);
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 3px;
+  inset-inline-start: 50%;
+  width: 4px;
+  height: 4px;
+  margin-inline-start: -2px;
+  border-radius: 50%;
+  background: var(--mint);
+  opacity: 0;
+  transform: scale(0);
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform 0.4s var(--ease-out);
+}
+
+.nav a[aria-current='true'] {
+  color: var(--cream);
+}
+
+.nav a[aria-current='true']::after {
+  opacity: 1;
+  transform: none;
+}
+
+/* ───────── Actions ───────── */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-inline-start: auto;
+}
+
+.nav + .actions {
+  margin-inline-start: 0;
+}
+
+.clock {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+:root[lang='ar'] .clock {
+  font-family: var(--f-sans);
+  font-size: 0.84rem;
+  letter-spacing: 0;
+}
+
+.clock time {
+  color: var(--cream);
+}
+
+.clockDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 0 3px rgba(95, 224, 200, 0.16);
+}
+
+.clockWide {
+  padding-inline-end: 6px;
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding-inline: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(7, 51, 43, 0.4);
+  color: var(--muted);
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.kbd kbd {
+  font-family: var(--f-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.kbd:hover {
+  color: var(--gold-bright);
+  border-color: var(--line-strong);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding-inline: 18px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--emerald-deep);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.cta:hover {
+  background: var(--gold-bright);
+}
+
+.menuButton {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--cream);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.menuButton:hover {
+  border-color: var(--gold);
+}
+
+@media (max-width: 1240px) {
+  .clockWide {
+    display: none;
+  }
+}
+
+@media (max-width: 1060px) {
+  .nav {
+    display: none;
+  }
+  /* The hidden nav still matches `.nav + .actions`, which cancelled the push to the edge and left
+     the menu button floating mid-bar on phones and tablets. */
+  .nav + .actions {
+    margin-inline-start: auto;
+  }
+  .menuButton {
+    display: grid;
+  }
+}
+
+@media (max-width: 720px) {
+  .kbd,
+  .cta {
+    display: none;
+  }
+}
+
+/* The name stays in the bar on every common phone (the hero drops it from its eyebrow on phones, so
+   the bar is where it reads): measured at 360 px, the English bar fits with 7 px to spare. */
+@media (max-width: 380px) {
+  .bar {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 350px) {
+  .logo {
+    display: none;
+  }
+  .mono {
+    display: block;
+  }
+}
+
+/* ───────── Mobile menu ───────── */
+
+.menu {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background:
+    radial-gradient(90% 60% at 80% 0%, rgba(12, 74, 62, 0.9), transparent 70%),
+    var(--emerald-deep);
+  color: var(--cream);
+}
+
+.menu::backdrop {
+  background: rgba(3, 26, 21, 0.6);
+}
+
+.menu[open] {
+  animation: menuIn 0.5s var(--ease-out);
+}
+
+@keyframes menuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+.menuInner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding-block: 12px 32px;
+}
+
+.menuTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: calc(var(--header-h) - 12px);
+}
+
+.menuTopActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menuTop .menuButton {
+  display: grid;
+}
+
+.menuList {
+  display: grid;
+  padding-block: 40px;
+}
+
+.menuList li {
+  border-bottom: 1px solid var(--line);
+}
+
+.menu[open] .menuList li {
+  animation: itemIn 0.7s var(--ease-out) backwards;
+  animation-delay: calc(0.06s * var(--i) + 0.08s);
+}
+
+@keyframes itemIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+.menuList a {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding-block: 16px;
+}
+
+.menuIndex {
+  font-family: var(--f-mono);
+  font-size: 0.78rem;
+  color: var(--gold);
+  min-width: 2ch;
+}
+
+.menuLabel {
+  font-family: var(--f-display);
+  font-weight: var(--display-weight);
+  font-size: clamp(2.2rem, 9vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: var(--track-display);
+}
+
+:root[lang='ar'] .menuLabel {
+  font-size: clamp(1.85rem, 7.4vw, 2.8rem);
+  line-height: 1.35;
+}
+
+.menuList a[aria-current='true'] .menuLabel {
+  color: var(--gold-bright);
+}
+
+.menuFoot {
+  margin-block-start: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.menuSocials {
+  display: flex;
+  gap: 8px;
+}
+
+.menuSocials a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--gold);
+}

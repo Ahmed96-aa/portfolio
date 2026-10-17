@@ -1,0 +1,307 @@
+.stackSection {
+  overflow: clip;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: clamp(40px, 6vw, 96px);
+}
+
+/* ───────── Isometric plates ───────── */
+
+.visual {
+  position: sticky;
+  top: calc(var(--header-h) + 48px);
+  display: grid;
+  place-items: center;
+  height: min(560px, 70vh);
+  min-height: 460px;
+}
+
+.isoWrap {
+  width: 290px;
+  height: 290px;
+  translate: 0 70px;
+}
+
+/* --gap, --rx and --rz are scrubbed by the scroll (Stack.tsx): the plates open out as the section arrives. */
+.iso {
+  --gap: 68px;
+  --rx: 56deg;
+  --rz: -42deg;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateZ(calc(var(--rz) * var(--flip)));
+}
+
+.plate {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 24px;
+  background:
+    linear-gradient(to right, rgba(217, 193, 141, 0.07) 1px, transparent 1px) 0 0 / 29px 29px,
+    linear-gradient(to bottom, rgba(217, 193, 141, 0.07) 1px, transparent 1px) 0 0 / 29px 29px,
+    linear-gradient(135deg, rgba(12, 74, 62, 0.96), rgba(7, 51, 43, 0.96));
+  box-shadow:
+    -22px 22px 44px rgba(var(--shadow-ink), 0.5),
+    inset 0 0 0 1px rgba(7, 51, 43, 0.5);
+  transform: translateZ(calc(var(--z) * var(--gap)));
+  transition:
+    transform 0.8s var(--ease-out),
+    border-color 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+}
+
+.plateActive {
+  transform: translateZ(calc(var(--z) * var(--gap) + 28px));
+  border-color: var(--gold);
+  box-shadow:
+    -22px 22px 44px rgba(var(--shadow-ink), 0.5),
+    0 0 46px rgba(217, 193, 141, 0.28);
+}
+
+.plateLabel {
+  position: absolute;
+  inset-inline-start: 22px;
+  bottom: 18px;
+  font-family: var(--f-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  direction: ltr;
+}
+
+.plateIndex {
+  position: absolute;
+  top: 16px;
+  inset-inline-end: 20px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.packet {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--cream) 0%, var(--mint) 45%, rgba(95, 224, 200, 0) 72%);
+  box-shadow: 0 0 22px var(--mint);
+  transform: translateZ(calc(3 * var(--gap) + 90px));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .packet {
+    animation: travel 4.6s var(--ease-in-out) infinite;
+  }
+}
+
+@keyframes travel {
+  0% {
+    transform: translateZ(calc(3 * var(--gap) + 110px));
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  44%,
+  56% {
+    transform: translateZ(calc(1 * var(--gap) + 10px));
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateZ(calc(3 * var(--gap) + 110px));
+    opacity: 0;
+  }
+}
+
+.flow {
+  position: absolute;
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mint-soft);
+}
+
+:root[lang='ar'] .flow {
+  font-family: var(--f-sans);
+  font-size: 0.82rem;
+  letter-spacing: 0;
+}
+
+.flowDown {
+  top: 8%;
+  inset-inline-start: 6%;
+}
+
+.flowUp {
+  bottom: 10%;
+  inset-inline-end: 6%;
+}
+
+/* ───────── Layer list ───────── */
+
+.layers {
+  border-block-start: 1px solid var(--line);
+}
+
+.layer {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 18px 32px;
+  padding-block: 30px;
+  padding-inline: 22px 6px;
+  border-block-end: 1px solid var(--line);
+  transition: background-color var(--dur-mid) var(--ease-out);
+}
+
+.layer::before {
+  content: '';
+  position: absolute;
+  inset-block: 18px;
+  inset-inline-start: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--gold);
+  transform: scaleY(0);
+  transition: transform 0.5s var(--ease-out);
+}
+
+.layerActive {
+  background: var(--gold-wash);
+}
+
+.layerActive::before {
+  transform: scaleY(1);
+}
+
+.layerHead {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+
+.layerIndex {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+:root[lang='ar'] .layerIndex {
+  font-family: var(--f-sans);
+  font-size: 0.82rem;
+  letter-spacing: 0;
+}
+
+.layerTitle {
+  font-size: clamp(1.7rem, 1.35rem + 1vw, 2.3rem);
+  line-height: var(--lh-tight);
+  color: var(--cream);
+}
+
+.layerNote {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: 8px;
+}
+
+.chips li {
+  padding: 7px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: rgba(7, 51, 43, 0.5);
+  font-family: var(--f-mono);
+  font-size: 0.78rem;
+  color: var(--cream);
+  direction: ltr;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.layerActive .chips li {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+}
+
+.chipsSoft li {
+  font-family: var(--f-sans);
+  font-size: 0.86rem;
+  border-style: dashed;
+  direction: inherit;
+}
+
+/* Phones and tablets: the plates stay pinned under the header while the layers scroll beneath
+   them, so the plate of the layer being read lifts in view — the same moment as on desktop. */
+@media (max-width: 1023px) {
+  .layout {
+    display: block;
+  }
+  .visual {
+    z-index: 2;
+    top: var(--header-h);
+    height: 340px;
+    min-height: 0;
+    margin-inline: calc(-1 * var(--gutter));
+    /* Opaque wherever the plates are drawn, so the layers scrolling beneath never show through
+       them; only the strip below the plates fades out. */
+    background: linear-gradient(to bottom, var(--emerald-deep) 88%, rgba(7, 51, 43, 0));
+  }
+  .isoWrap {
+    scale: 0.68;
+    translate: 0 30px;
+  }
+  .flowDown {
+    top: 10%;
+    inset-inline-start: calc(var(--gutter) + 4px);
+  }
+  .flowUp {
+    bottom: 18%;
+    inset-inline-end: calc(var(--gutter) + 4px);
+  }
+  .layers {
+    margin-block-start: 6px;
+  }
+}
+
+@media (max-width: 640px) {
+  .visual {
+    height: 270px;
+  }
+  .isoWrap {
+    scale: 0.52;
+    translate: 0 18px;
+  }
+  .flowDown,
+  .flowUp {
+    top: 8%;
+    bottom: auto;
+  }
+  .layer {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline-start: 16px;
+  }
+}

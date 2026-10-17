@@ -1,0 +1,325 @@
+/* ─────────────────────────────────────────────────────────────
+   Print: the page becomes a résumé — dark ink on white, no motion,
+   no interface chrome, every section expanded.
+   ───────────────────────────────────────────────────────────── */
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 14mm 16mm;
+  }
+
+  :root {
+    color-scheme: light;
+    --cream: #07332b;
+    --gold: #0c4a3e;
+    --gold-bright: #0c4a3e;
+    --muted: #3d5a50;
+    --mint: #0c4a3e;
+    --mint-soft: #0c4a3e;
+    --line: rgba(12, 74, 62, 0.22);
+    --line-strong: rgba(12, 74, 62, 0.4);
+    --paper-ink: #07332b;
+    --paper-ink-soft: #3d5a50;
+    --section-pad: 9mm;
+    --fs-hero: 25pt;
+    --fs-h2: 17pt;
+    --fs-h3: 13pt;
+    --fs-h4: 11.5pt;
+    --fs-lead: 10.5pt;
+    --fs-body: 9.5pt;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #07332b;
+    font-size: 9.5pt;
+    line-height: 1.5;
+  }
+
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Anything the motion system had not revealed yet must still print. */
+  [data-reveal],
+  [data-reveal-stagger] > *,
+  [data-hero],
+  [data-case] > article,
+  .split-inner {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  /* The light sweep paints accent words through a clipped background, which print removes. */
+  .accent {
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+  .spot,
+  .uv,
+  canvas {
+    display: none !important;
+  }
+
+  .print-header {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 6mm;
+    padding-block-end: 5mm;
+    margin-block-end: 6mm;
+    border-bottom: 1.5pt solid #0c4a3e;
+  }
+
+  .print-mono {
+    font-size: 30pt;
+    color: #0c4a3e;
+  }
+
+  .print-name {
+    font-family: var(--f-display);
+    font-size: 22pt;
+    line-height: 1.1;
+  }
+
+  .print-title {
+    font-size: 10pt;
+    color: #3d5a50;
+  }
+
+  .print-contact {
+    display: grid;
+    gap: 1mm;
+    font-size: 8.5pt;
+    text-align: end;
+  }
+
+  /* Interface chrome that has no meaning on paper */
+  .skip-link,
+  body > div > header[class*='_header_'],
+  header[class*='_header_'],
+  button[class*='_copy_'],
+  a[download],
+  [class*='_band_'],
+  dialog,
+  [role='status'],
+  [class*='Marquee'],
+  [class*='marquee'],
+  [class*='backdrop'],
+  [class*='Badge'],
+  [class*='badge'],
+  [class*='blueprint'],
+  [class*='Blueprint'],
+  [class*='visual'],
+  [class*='heritage'],
+  [class*='glow'],
+  [class*='watermark'],
+  [class*='rosette'],
+  [class*='guilloche'],
+  [class*='ctas'],
+  [class*='status'],
+  [class*='eyebrow'],
+  [class*='rowToggle'],
+  [class*='rowSpacer'],
+  form,
+  [class*='preview'],
+  [class*='note'],
+  footer [class*='cta'],
+  footer [class*='cols'],
+  footer [class*='sun'],
+  footer a[href='#top'] {
+    display: none !important;
+  }
+
+  main,
+  .section,
+  section {
+    padding-block: 0 !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  section + section {
+    margin-block-start: 7mm;
+  }
+
+  .container {
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+    color: #07332b !important;
+  }
+
+  li,
+  article,
+  dl > div {
+    break-inside: avoid;
+  }
+
+  /* Hero becomes the summary */
+  #top {
+    padding-block-start: 0 !important;
+  }
+
+  #top h1 {
+    font-size: 18pt;
+    max-width: none;
+  }
+
+  #top [class*='_inner_'] {
+    display: block !important;
+  }
+
+  #top [class*='lead'] {
+    margin-block-start: 3mm;
+    font-size: 10pt;
+    color: #07332b;
+  }
+
+  #top [class*='factsWrap'] {
+    margin-block-start: 4mm;
+  }
+
+  #top [class*='fact'] dd {
+    font-size: 15pt;
+  }
+
+  /* Section heads compact */
+  header[class*='_head_'] {
+    display: block !important;
+    margin-block-end: 3mm !important;
+  }
+
+  header[class*='_head_'] [class*='kicker'] {
+    margin-block-end: 1mm;
+  }
+
+  header[class*='_head_'] [class*='intro'] {
+    display: none;
+  }
+
+  /* Case studies: plain blocks */
+  [class*='caseItem'] {
+    position: static !important;
+  }
+
+  [class*='case_'],
+  [class*='_case_'] {
+    display: block !important;
+    padding: 3mm 0 !important;
+    border: 0 !important;
+    border-bottom: 0.75pt solid var(--line) !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+  }
+
+  [class*='caseTitle'] {
+    font-size: 14pt !important;
+  }
+
+  [class*='caseMeta'] {
+    margin-block-end: 1mm !important;
+  }
+
+  [class*='caseFoot'] {
+    padding-block-start: 2mm !important;
+    gap: 2mm !important;
+  }
+
+  [class*='caseVisual'] {
+    display: block !important;
+    margin-block-start: 2mm;
+  }
+
+  /* "More systems": always expanded */
+  [class*='rowPanel'] {
+    grid-template-rows: 1fr !important;
+  }
+
+  [class*='rowButton'] {
+    padding-block: 2mm 0 !important;
+  }
+
+  [class*='rowInner'] {
+    display: block !important;
+    padding-block-end: 2mm !important;
+  }
+
+  /* Services paper panel flattens */
+  [class*='paper'] {
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  [class*='Services'] [class*='grid'],
+  [class*='services'] [class*='grid'] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  [class*='item'] {
+    padding-block: 2mm !important;
+  }
+
+  [class*='rail'] {
+    grid-template-columns: repeat(5, 1fr) !important;
+    padding: 0 !important;
+  }
+
+  [class*='rail']::before,
+  [class*='rail']::after,
+  [class*='node'] {
+    display: none !important;
+  }
+
+  [class*='num'] {
+    -webkit-text-stroke: 0 !important;
+    color: #0c4a3e !important;
+  }
+
+  [class*='layout'] {
+    display: block !important;
+  }
+
+  [class*='quote'] {
+    position: static !important;
+  }
+
+  [class*='quoteMark'] {
+    display: none !important;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  footer {
+    padding: 4mm 0 0 !important;
+    border-top: 0.75pt solid var(--line) !important;
+  }
+}

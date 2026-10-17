@@ -1,0 +1,281 @@
+/* ───────── Story ───────── */
+
+.story {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(36px, 6vw, 104px);
+  align-items: start;
+}
+
+.quote {
+  position: sticky;
+  top: calc(var(--header-h) + 40px);
+  margin: 0;
+}
+
+.quoteMark {
+  display: block;
+  height: 0.5em;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(7rem, 5rem + 6vw, 11rem);
+  line-height: 0.9;
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+:root[dir='rtl'] .quoteMark {
+  transform: scaleX(-1);
+  width: max-content;
+}
+
+.quote p {
+  font-size: clamp(2rem, 1.4rem + 2vw, 3.2rem);
+  line-height: var(--lh-tight);
+  color: var(--cream);
+}
+
+.bio {
+  display: grid;
+  gap: 22px;
+  font-size: 1.06rem;
+  line-height: 1.8;
+  color: color-mix(in srgb, var(--cream) 80%, var(--muted));
+}
+
+.bio p:first-child {
+  font-size: var(--fs-lead);
+  line-height: 1.65;
+  color: var(--cream);
+}
+
+:root[lang='ar'] .bio {
+  font-family: var(--f-read);
+  font-size: 1.08rem;
+  line-height: 1.85;
+}
+
+:root[lang='ar'] .bio p:first-child {
+  line-height: 1.8;
+}
+
+/* ───────── Principles ───────── */
+
+.principles {
+  margin-block-start: clamp(72px, 9vw, 128px);
+}
+
+.smallHead {
+  margin-block-end: 22px;
+  color: var(--gold);
+}
+
+.principleList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.principleList li {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 30px 28px 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: linear-gradient(180deg, rgba(12, 74, 62, 0.55), rgba(7, 51, 43, 0.2));
+  transition:
+    border-color var(--dur-mid) var(--ease-out),
+    transform 0.6s var(--ease-out);
+}
+
+.principleList li:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-4px);
+}
+
+.principleList li {
+  --uv-size: 220px;
+  --spot-size: 420px;
+}
+
+.principleNum {
+  font-family: var(--f-mono);
+  font-size: 0.74rem;
+  color: var(--gold);
+}
+
+:root[lang='ar'] .principleNum {
+  font-family: var(--f-sans);
+  font-size: 0.9rem;
+}
+
+.principleTitle {
+  font-size: clamp(1.6rem, 1.3rem + 0.8vw, 2.05rem);
+  line-height: var(--lh-tight);
+  color: var(--cream);
+}
+
+.principleList p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+:root[lang='ar'] .principleList p {
+  font-family: var(--f-read);
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+/* ───────── Ledger + heritage ───────── */
+
+.lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-block-start: 16px;
+}
+
+.ledger {
+  padding: 30px 30px 34px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+}
+
+.ledger dl {
+  display: grid;
+}
+
+.ledger dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+  gap: 16px;
+  padding-block: 13px;
+  border-block-end: 1px dashed var(--line);
+}
+
+.ledger dt {
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.ledger dd {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--cream);
+  text-wrap: pretty;
+}
+
+.cv {
+  margin-block-start: 26px;
+  font-size: 0.92rem;
+}
+
+.heritage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 30px 32px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background:
+    radial-gradient(90% 80% at 100% 0%, rgba(217, 193, 141, 0.16), transparent 60%),
+    linear-gradient(160deg, var(--emerald), var(--emerald-deep));
+}
+
+.heritageRosette {
+  position: absolute;
+  z-index: -1;
+  width: 460px;
+  height: 460px;
+  top: -150px;
+  inset-inline-end: -150px;
+  opacity: 0.22;
+}
+
+.calligraphy {
+  position: absolute;
+  z-index: -1;
+  inset-inline-end: 26px;
+  bottom: 54px;
+  font-family: 'Aref Ruqaa', 'Geist Variable', 'Alexandria Variable', serif;
+  font-weight: 700;
+  font-size: clamp(4.6rem, 2.6rem + 5vw, 7.6rem);
+  line-height: 1.4;
+  color: var(--gold);
+  opacity: 0.13;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.heritageLabel {
+  color: var(--mint-soft);
+}
+
+.heritageTitle {
+  margin-block-start: 14px;
+  max-width: 14em;
+  font-size: clamp(1.9rem, 1.4rem + 1.4vw, 2.7rem);
+  line-height: var(--lh-tight);
+  color: var(--cream);
+}
+
+.heritageBody {
+  margin-block-start: 16px;
+  max-width: 48ch;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--cream) 78%, var(--muted));
+}
+
+:root[lang='ar'] .heritageBody {
+  font-family: var(--f-read);
+  font-size: 1.02rem;
+  line-height: 1.85;
+}
+
+.heritageSign {
+  margin-block-start: auto;
+  padding-block-start: 28px;
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+@media (max-width: 1023px) {
+  .story,
+  .lower {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .quote {
+    position: relative;
+    top: 0;
+  }
+  .principleList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Phones: the ledger keeps its two columns, as a spec sheet — label and value on one line. */
+@media (max-width: 560px) {
+  .principles {
+    margin-block-start: 60px;
+  }
+  .principleList li {
+    padding: 24px 22px 26px;
+  }
+  .ledger dl > div {
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
+    gap: 12px;
+    padding-block: 11px;
+  }
+  .ledger,
+  .heritage {
+    padding: 24px 22px 26px;
+  }
+}

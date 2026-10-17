@@ -1,0 +1,29 @@
+# Cloudflare Pages response headers (https://developers.cloudflare.com/pages/configuration/headers/).
+#
+# Content-Security-Policy, matched to what the site actually loads:
+#   script-src   own bundle only (the JSON-LD block is data, not executed); Cloudflare Web Analytics
+#                is allowed in case it is switched on in the Pages dashboard, which injects its beacon.
+#   style-src    own CSS only — React and GSAP set styles through the CSSOM, which CSP does not block.
+#   connect-src  Formspree receives the contact form; cloudflareinsights.com receives analytics beacons.
+#   img-src      data: for the inline SVG used by a few CSS backgrounds.
+# If a new third-party service is added (a form host, analytics, embeds), add its origin here.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io https://cloudflareinsights.com; manifest-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=31536000
+
+# The browser's built-in PDF viewer must be free to render the CVs (a CSP on the PDF itself can block it).
+/Ahmed-Abbas-Ashour-CV.pdf
+  ! Content-Security-Policy
+
+/Ahmed-Abbas-Ashour-CV-ar.pdf
+  ! Content-Security-Policy
+
+# Vite fingerprints every file in /assets, so they never change under the same name.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

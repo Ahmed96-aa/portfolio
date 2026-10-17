@@ -1,0 +1,54 @@
+.defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.guilloche {
+  color: var(--gold);
+  stroke-width: 0.6px;
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spin {
+    animation: spin 160s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.monogram {
+  display: inline-block;
+  flex: none;
+  width: auto;
+  height: 1em;
+  aspect-ratio: 699.6 / 1162.1;
+  overflow: visible;
+}
+
+.latin {
+  fill: var(--cream);
+}
+
+.stem {
+  fill: var(--mint);
+}
+
+.arabic {
+  fill: var(--gold);
+}
+
+.logo {
+  display: inline-block;
+  flex: none;
+  width: auto;
+  height: 1em;
+  aspect-ratio: 5358.1 / 1292.1;
+  overflow: visible;
+}

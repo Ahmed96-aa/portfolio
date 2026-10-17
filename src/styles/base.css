@@ -1,0 +1,355 @@
+/* ───────── Base ───────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+  background: var(--emerald-deep);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--emerald-deep);
+  color: var(--cream);
+  font-family: var(--f-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+dl,
+dd,
+ol,
+ul,
+figure,
+blockquote,
+pre {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+/* The browser gives these the bare `monospace` family (Courier New on an Arabic page in Windows), and a
+   <code> keeps it even inside a <pre> styled with the site's mono — so set it on the elements themselves. */
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--f-mono);
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--emerald-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ───────── Layout primitives ───────── */
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+
+/* ───────── Typography primitives ───────── */
+
+.display {
+  font-family: var(--f-display);
+  font-weight: var(--display-weight);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+/* The accent word: Instrument Serif italic in English, Ruqʿah calligraphy in Arabic. */
+.accent {
+  font-family: var(--f-accent);
+  font-style: var(--accent-style);
+  font-weight: 400;
+  color: var(--gold);
+  padding-inline-end: 0.04em;
+}
+
+:root[lang='ar'] .accent {
+  font-weight: 700;
+  font-size: 1.12em;
+  line-height: 1;
+}
+
+/*
+ * A single sweep of light across a gold accent word as it arrives (useSiteMotion adds .is-lit).
+ * Nothing moves — only the light — so it stays under reduced motion too (see the end of file).
+ * The padding widens the painted area past italic overhangs and Ruqʿah strokes; the negative
+ * margin keeps the layout exactly where it was. A surface with its own accent colour sets
+ * --sheen-ink / --sheen-light (the cream paper does: gold on cream would not read).
+ */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .accent.is-lit {
+    padding-block: 0.3em;
+    padding-inline: 0.14em 0.18em;
+    margin-inline: -0.14em;
+    background-image: linear-gradient(
+      105deg,
+      var(--sheen-ink, var(--gold)) 0 36%,
+      var(--sheen-light, var(--cream)) 47%,
+      var(--sheen-peak, var(--gold-bright)) 53%,
+      var(--sheen-ink, var(--gold)) 64% 100%
+    );
+    background-size: 280% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: accent-sheen 2.4s var(--ease-in-out) 0.45s both;
+  }
+
+  :root[dir='rtl'] .accent.is-lit {
+    background-position: 0 0;
+    animation-name: accent-sheen-rtl;
+  }
+}
+
+@keyframes accent-sheen {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@keyframes accent-sheen-rtl {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
+
+.label {
+  font-family: var(--f-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+:root[lang='ar'] .label {
+  font-family: var(--f-sans);
+  font-weight: 500;
+  text-transform: none;
+}
+
+/* Mono text that stays mono (and left-to-right) in both languages: code, times, IDs. */
+.mono {
+  font-family: var(--f-mono);
+  font-feature-settings: 'zero' 0;
+}
+
+.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.dir-icon {
+  transform: scaleX(var(--flip));
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  inset-block-start: 12px;
+  inset-inline-start: 12px;
+  z-index: 300;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--emerald-deep);
+  font-weight: 600;
+  transform: translateY(-180%);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Split words — masked rise. Padding keeps descenders and Arabic marks inside the mask. */
+.split-word {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: top;
+  padding-block: 0.06em 0.16em;
+  margin-block: -0.06em -0.16em;
+  padding-inline: 0.05em;
+  margin-inline: -0.05em;
+}
+
+:root[lang='ar'] .split-word {
+  padding-block: 0.2em 0.28em;
+  margin-block: -0.2em -0.28em;
+}
+
+.split-inner {
+  display: inline-block;
+}
+
+/* ───────── Light & engraving (useDepth) ─────────
+   A surface marked data-spot carries two quiet layers: .spot, a soft light that follows the pointer
+   (or, on touch screens, the middle of the viewport), and .uv, the guilloche engraving that only
+   shows where that light falls — like security print under a lamp. */
+
+[data-spot] {
+  --sx: 50%;
+  --sy: -30%;
+  --spot: 0;
+  position: relative;
+  isolation: isolate;
+}
+
+.spot,
+.uv {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--spot);
+  transition: opacity 0.7s var(--ease-out);
+}
+
+.spot {
+  background: radial-gradient(
+    var(--spot-size, 560px) circle at var(--sx) var(--sy),
+    var(--spot-color, rgba(234, 214, 164, 0.12)),
+    transparent 62%
+  );
+}
+
+.uv {
+  background-color: var(--uv-color, rgba(217, 193, 141, 0.4));
+  -webkit-mask-image: var(--guilloche-tile), radial-gradient(var(--uv-size, 300px) circle at var(--sx) var(--sy), #000, transparent 72%);
+  mask-image: var(--guilloche-tile), radial-gradient(var(--uv-size, 300px) circle at var(--sx) var(--sy), #000, transparent 72%);
+  -webkit-mask-size:
+    240px 64px,
+    100% 100%;
+  mask-size:
+    240px 64px,
+    100% 100%;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Elements revealed by the motion system start visible; GSAP only hides them when motion is allowed. */
+[data-reveal],
+[data-reveal-stagger] > * {
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Light, not motion: the accent sweep and the surface light keep their pace. */
+  .accent.is-lit {
+    animation-duration: 2.4s !important;
+  }
+
+  .spot,
+  .uv {
+    transition-duration: 0.7s !important;
+  }
+}

@@ -1,0 +1,10 @@
+.astrolabe {
+  display: block;
+  pointer-events: none;
+}
+
+@media print {
+  .astrolabe {
+    display: none;
+  }
+}

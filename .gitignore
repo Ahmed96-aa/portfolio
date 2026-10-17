@@ -1,0 +1,16 @@
+node_modules
+dist
+*.local
+.vite
+.DS_Store
+*.log
+
+# Personal CV (contains private details)
+AhmedAbbasCV.pdf
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example

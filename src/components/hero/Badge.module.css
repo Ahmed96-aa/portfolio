@@ -1,0 +1,590 @@
+/* The badge is drawn in em units so it scales from one font-size on the stage. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.stage {
+  --card-w: 21em;
+  --card-h: 33em;
+  position: relative;
+  z-index: 2;
+  width: var(--card-w);
+  height: var(--card-h);
+  font-size: clamp(13px, 0.42vw + 9.6px, 16px);
+}
+
+.stacked {
+  margin-block-start: var(--lanyard);
+  font-size: clamp(12.5px, 2.6vw + 3px, 15px);
+}
+
+.drop {
+  position: absolute;
+  inset: 0;
+  animation: drop 1.7s var(--ease-out) 0.2s backwards;
+}
+
+/* The entrance waits for the badge to be seen (Badge.tsx adds .inView). */
+@media (prefers-reduced-motion: no-preference) {
+  .drop {
+    animation-play-state: paused;
+  }
+  .inView .drop {
+    animation-play-state: running;
+  }
+}
+
+@keyframes drop {
+  from {
+    transform: translateY(-62vh);
+  }
+}
+
+/* Stacked under the text, a long drop would fall across the words: a short, soft one instead. */
+.stacked .drop {
+  animation-name: drop-short;
+  animation-duration: 1.5s;
+  animation-delay: 0.05s;
+}
+
+@keyframes drop-short {
+  from {
+    transform: translateY(-110px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+.swing {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(-1 * var(--lanyard));
+  height: calc(var(--lanyard) + var(--card-h));
+  transform-origin: 50% 0;
+  will-change: transform;
+}
+
+/* ───────── Lanyard & clip ───────── */
+
+.lanyard {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1.75em;
+  margin-left: -0.875em;
+  height: calc(var(--lanyard) - 1.4em);
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(90deg, rgba(7, 51, 43, 0.14) 0 1px, transparent 1px 3px),
+    linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 45%, var(--gold) 100%);
+  box-shadow:
+    inset 1px 0 0 rgba(239, 230, 204, 0.45),
+    inset -1px 0 0 rgba(7, 51, 43, 0.25),
+    0 0 18px rgba(var(--shadow-ink), 0.35);
+}
+
+.lanyard {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--lanyard) - var(--lanyard-visible, 9999px)),
+    #000 calc(var(--lanyard) - var(--lanyard-visible, 9999px) + 70px)
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--lanyard) - var(--lanyard-visible, 9999px)),
+    #000 calc(var(--lanyard) - var(--lanyard-visible, 9999px) + 70px)
+  );
+}
+
+.stacked .lanyard {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 75%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 75%);
+}
+
+.lanyard span {
+  display: block;
+  writing-mode: vertical-rl;
+  margin-inline: auto;
+  padding-block-start: 1em;
+  font-family: var(--f-mono);
+  font-size: 0.5em;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  line-height: 3.5em;
+  color: var(--emerald-deep);
+  white-space: nowrap;
+  opacity: 0.82;
+  direction: ltr;
+  unicode-bidi: isolate;
+  transform: rotate(180deg);
+}
+
+.clip {
+  position: absolute;
+  top: calc(var(--lanyard) - 2.35em);
+  left: 50%;
+  width: 2.7em;
+  height: 3.3em;
+  margin-left: -1.35em;
+  border-radius: 0.6em 0.6em 0.45em 0.45em;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--gold) 80%, var(--emerald-deep)) 0%,
+    var(--gold-bright) 38%,
+    var(--gold) 62%,
+    color-mix(in oklab, var(--gold) 72%, var(--emerald-deep)) 100%
+  );
+  box-shadow:
+    0 0.5em 1em -0.3em rgba(var(--shadow-ink), 0.8),
+    inset 0 1px 0 rgba(239, 230, 204, 0.7);
+}
+
+.clip i {
+  position: absolute;
+  inset-inline: 0.55em;
+  top: 0.6em;
+  height: 1.1em;
+  border-radius: 0.5em;
+  background: var(--emerald-deep);
+  box-shadow: inset 0 1px 3px rgba(var(--shadow-ink), 0.9);
+}
+
+/* ───────── Card ───────── */
+
+.card {
+  position: absolute;
+  top: var(--lanyard);
+  left: 0;
+  width: var(--card-w);
+  height: var(--card-h);
+  margin: 0;
+  perspective: 1100px;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.tilt {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+
+.flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.95s var(--ease-out);
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.35em 1.5em 1.25em;
+  overflow: hidden;
+  border-radius: 1.4em;
+  border: 1px solid var(--line-strong);
+  background:
+    radial-gradient(130% 70% at 50% 0%, var(--emerald) 0%, var(--emerald-panel) 52%, var(--emerald-deep) 100%);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 1px 0 rgba(234, 214, 164, 0.24);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.face::before {
+  content: '';
+  position: absolute;
+  inset: 0.55em;
+  border: 1px solid var(--line);
+  border-radius: 1em;
+  pointer-events: none;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+.watermark,
+.watermarkBack {
+  position: absolute;
+  left: 50%;
+  width: 27em;
+  height: 27em;
+  margin-left: -13.5em;
+  opacity: 0.055;
+  pointer-events: none;
+}
+
+.watermark {
+  top: -4.5em;
+}
+
+.watermarkBack {
+  bottom: -8.5em;
+  opacity: 0.08;
+}
+
+.slot {
+  position: absolute;
+  top: 0.95em;
+  left: 50%;
+  width: 3.4em;
+  height: 0.62em;
+  margin-left: -1.7em;
+  border-radius: 1em;
+  background: var(--emerald-deep);
+  box-shadow:
+    inset 0 1px 2px rgba(var(--shadow-ink), 0.9),
+    0 1px 0 rgba(234, 214, 164, 0.22);
+}
+
+.top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-start: 0.85em;
+}
+
+.mono {
+  font-size: 2em;
+}
+
+.access {
+  font-family: var(--f-mono);
+  font-size: 0.56em;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+:root[lang='ar'] .access {
+  font-family: var(--f-sans);
+  font-size: 0.7em;
+  letter-spacing: 0;
+}
+
+.back .access {
+  font-family: var(--f-mono);
+  font-size: 0.62em;
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+/* Portrait inside a slowly turning guilloche ring */
+.photoWrap {
+  position: relative;
+  width: 10.4em;
+  height: 10.4em;
+  margin: 1.15em auto 0;
+}
+
+.photoRing {
+  position: absolute;
+  inset: -2.4em;
+  width: calc(100% + 4.8em);
+  height: calc(100% + 4.8em);
+  max-width: none;
+  opacity: 0.5;
+}
+
+.photo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 32%, color-mix(in oklab, var(--emerald) 72%, var(--mint-soft)) 0%, var(--emerald) 50%, var(--emerald-deep) 100%);
+  box-shadow:
+    0 0 0 1px var(--gold),
+    0 0 0 0.42em rgba(7, 51, 43, 0.92),
+    0 0 0 calc(0.42em + 1px) var(--line-strong),
+    0 1.4em 2.4em -1em rgba(var(--shadow-ink), 0.9);
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 14%;
+  transform: scale(1.06) translateY(3%);
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.names {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  margin-block-start: 1.25em;
+  text-align: center;
+}
+
+.nameEn {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.95em;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+}
+
+.nameAr {
+  font-family: var(--f-sans);
+  font-weight: 500;
+  font-size: 1.08em;
+  line-height: 1.5;
+  color: var(--gold);
+}
+
+.role {
+  margin-block-start: 0.3em;
+  font-size: 0.74em;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.fields {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7em 1em;
+  margin-block-start: auto;
+  padding-block-start: 0.95em;
+  border-block-start: 1px dashed var(--line-strong);
+}
+
+.fields dt {
+  font-family: var(--f-mono);
+  font-size: 0.52em;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+:root[lang='ar'] .fields dt {
+  font-family: var(--f-sans);
+  font-size: 0.64em;
+  letter-spacing: 0;
+}
+
+.fields dd {
+  margin-block-start: 0.15em;
+  font-size: 0.74em;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--cream);
+}
+
+.bottom {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.8em;
+  margin-block-start: 0.95em;
+}
+
+.mrz {
+  display: grid;
+  min-width: 0;
+  overflow: hidden;
+  direction: ltr;
+  font-family: var(--f-mono);
+  font-size: 0.5em;
+  letter-spacing: 0.15em;
+  line-height: 1.7;
+  white-space: nowrap;
+  color: rgba(239, 230, 204, 0.5);
+}
+
+.seal {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.8em;
+  height: 2.8em;
+  border-radius: 50%;
+  color: var(--emerald-deep);
+  background: conic-gradient(
+    from var(--holo, 30deg),
+    var(--gold),
+    var(--mint),
+    var(--cream),
+    var(--gold-bright),
+    var(--mint-soft),
+    var(--gold)
+  );
+  box-shadow:
+    0 0 0 1px var(--line-strong),
+    inset 0 0 0 0.3em rgba(239, 230, 204, 0.28);
+}
+
+.seal svg {
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(22em circle at var(--px, 28%) var(--py, 18%), rgba(234, 214, 164, 0.2), transparent 55%),
+    linear-gradient(115deg, transparent 32%, rgba(95, 224, 200, 0.07) 44%, rgba(234, 214, 164, 0.1) 51%, transparent 62%);
+  background-size:
+    100% 100%,
+    240% 240%;
+  background-position:
+    center,
+    var(--px, 30%) var(--py, 30%);
+  mix-blend-mode: screen;
+}
+
+/* Holographic foil: a faint band of the palette's own colours that turns as the badge tilts. */
+.sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--holo, 200deg) at var(--px, 50%) var(--py, 40%),
+    rgba(95, 224, 200, 0.07),
+    rgba(234, 214, 164, 0.1),
+    rgba(239, 230, 204, 0.04),
+    rgba(132, 208, 188, 0.08),
+    rgba(217, 193, 141, 0.09),
+    rgba(95, 224, 200, 0.07)
+  );
+  -webkit-mask-image: var(--guilloche-tile);
+  mask-image: var(--guilloche-tile);
+  -webkit-mask-size: 120px 32px;
+  mask-size: 120px 32px;
+  opacity: 0.9;
+}
+
+/* ───────── Back face ───────── */
+
+.code {
+  position: relative;
+  margin-block-start: 1.3em;
+  padding: 1em 1.1em;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.8em;
+  background: rgba(7, 51, 43, 0.62);
+  font-family: var(--f-mono);
+  font-size: 0.6em;
+  line-height: 1.75;
+  color: var(--cream);
+  white-space: pre;
+  text-align: left;
+  tab-size: 2;
+}
+
+.k {
+  color: var(--gold);
+}
+
+.v {
+  color: var(--mint);
+}
+
+.b {
+  color: var(--gold-bright);
+}
+
+.p {
+  color: var(--muted);
+}
+
+.backNote {
+  position: relative;
+  margin-block-start: 1.1em;
+  font-size: 0.8em;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--muted);
+}
+
+.backCta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  align-self: center;
+  margin-block-start: auto;
+  height: 2.9em;
+  padding-inline: 1.3em 1.1em;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--emerald-deep);
+  font-size: 0.84em;
+  font-weight: 600;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.backCta:hover {
+  background: var(--gold-bright);
+}
+
+/* ───────── Hint ───────── */
+
+.hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+:root[lang='ar'] .hint {
+  font-family: var(--f-sans);
+  font-size: 0.82rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.hint:hover {
+  color: var(--gold-bright);
+}
+
+.hint svg {
+  transition: transform 0.6s var(--ease-out);
+}
+
+.hint:hover svg {
+  transform: rotate(-180deg);
+}

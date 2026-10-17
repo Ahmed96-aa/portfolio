@@ -1,0 +1,17 @@
+/* Styles for 404.html (kept external so the CSP in _headers can stay free of inline styles). */
+:root { color-scheme: dark; --deep: #07332b; --emerald: #0c4a3e; --gold: #d9c18d; --cream: #efe6cc; --muted: #a9bfb1; --mint: #5fe0c8; --line: rgba(217, 193, 141, 0.34); }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body { min-height: 100vh; display: grid; place-items: center; padding: 32px max(20px, env(safe-area-inset-left, 0px)) 32px max(20px, env(safe-area-inset-right, 0px)); background: radial-gradient(80% 70% at 50% 20%, var(--emerald) 0%, transparent 70%), var(--deep); color: var(--cream); font-family: system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif; line-height: 1.7; text-align: center; }
+main { display: grid; justify-items: center; gap: 22px; max-width: 34rem; }
+svg { width: auto; height: 76px; }
+.code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85rem; letter-spacing: 0.2em; color: var(--mint); }
+h1 { margin: 0; font-size: clamp(1.6rem, 1.2rem + 2vw, 2.2rem); font-weight: 700; line-height: 1.35; }
+p { margin: 0; color: var(--muted); }
+.en { direction: ltr; font-size: 0.95rem; }
+.en h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 600; color: var(--cream); }
+hr { width: 64px; border: 0; border-top: 1px solid var(--line); margin: 4px 0; }
+nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 6px; }
+a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: 999px; border: 1px solid var(--line); color: var(--cream); text-decoration: none; font-weight: 600; }
+a.primary { background: var(--gold); border-color: var(--gold); color: var(--deep); }
+a:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
